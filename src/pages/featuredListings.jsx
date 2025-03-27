@@ -4,7 +4,11 @@ import {
   Card, CardContent, CardMedia, Chip 
 } from '@mui/material';
 import { Star as StarIcon, LocationOn as LocationIcon } from '@mui/icons-material';
-
+// import Logo from "../../../assets/Gold Logo Mockup.jpg"
+import image1 from '../assets/ups.jpg'
+import image2 from '../assets/opopo.jpg'
+import image3 from '../assets/hero-image.jpg'
+import image4 from '../assets/renting.jpg'
 const FeaturedListings = ({ theme }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
@@ -26,7 +30,8 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.8,
       reviews: 124,
       location: 'New York, NY',
-      image: '/assets/listings/camera.jpg',
+      image: {image1},
+      // image: '../../../assets/Gold Logo Mockup.jpg',
       category: 'Photography'
     },
     {
@@ -36,7 +41,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.9,
       reviews: 87,
       location: 'Los Angeles, CA',
-      image: '/assets/listings/tent.jpg',
+      image: {image2},
       category: 'Events'
     },
     {
@@ -46,7 +51,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.7,
       reviews: 56,
       location: 'Denver, CO',
-      image: '/assets/listings/bike.jpg',
+      image: {image3},
       category: 'Sports'
     },
     {
@@ -56,7 +61,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.9,
       reviews: 98,
       location: 'Miami, FL',
-      image: '/assets/listings/sound-system.jpg',
+      image: {image4},
       category: 'Entertainment'
     },
     {
@@ -66,7 +71,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.8,
       reviews: 76,
       location: 'San Francisco, CA',
-      image: '/assets/listings/wedding-gown.jpg',
+      image: {image1},
       category: 'Fashion'
     },
     {
@@ -76,7 +81,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.7,
       reviews: 63,
       location: 'Seattle, WA',
-      image: '/assets/listings/drone.jpg',
+      image: {image4},
       category: 'Photography'
     },
     {
@@ -86,7 +91,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.6,
       reviews: 45,
       location: 'Austin, TX',
-      image: '/assets/listings/camping-gear.jpg',
+      image: {image4},
       category: 'Outdoor'
     },
     {
@@ -96,7 +101,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.9,
       reviews: 150,
       location: 'Chicago, IL',
-      image: '/assets/listings/gaming-console.jpg',
+      image: {image3},
       category: 'Entertainment'
     },
     {
@@ -106,7 +111,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.7,
       reviews: 90,
       location: 'Las Vegas, NV',
-      image: '/assets/listings/lighting-kit.jpg',
+      image: {image1},
       category: 'Photography'
     },
     {
@@ -116,7 +121,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.9,
       reviews: 220,
       location: 'Houston, TX',
-      image: '/assets/listings/luxury-car.jpg',
+      image: {image2},
       category: 'Automobile'
     },
     {
@@ -126,7 +131,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.6,
       reviews: 75,
       location: 'Orlando, FL',
-      image: '/assets/listings/electric-scooter.jpg',
+      image: {image4},
       category: 'Transport'
     },
     {
@@ -136,7 +141,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.8,
       reviews: 134,
       location: 'San Diego, CA',
-      image: '/assets/listings/projector.jpg',
+      image: {image2},
       category: 'Electronics'
     },
     {
@@ -146,7 +151,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.7,
       reviews: 48,
       location: 'Portland, OR',
-      image: '/assets/listings/kayak.jpg',
+      image: {image1},
       category: 'Water Sports'
     },
     {
@@ -156,7 +161,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.9,
       reviews: 88,
       location: 'Boston, MA',
-      image: '/assets/listings/vr-headset.jpg',
+      image: {image1},
       category: 'Gaming'
     },
     {
@@ -166,7 +171,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.7,
       reviews: 112,
       location: 'Philadelphia, PA',
-      image: '/assets/listings/catering.jpg',
+      image: {image2},
       category: 'Events'
     },
     {
@@ -176,7 +181,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.8,
       reviews: 95,
       location: 'Phoenix, AZ',
-      image: '/assets/listings/motorcycle.jpg',
+      image: {image3},
       category: 'Transport'
     },
     {
@@ -186,7 +191,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.6,
       reviews: 52,
       location: 'Salt Lake City, UT',
-      image: '/assets/listings/snowboard.jpg',
+      image: {image4},
       category: 'Winter Sports'
     },
     {
@@ -196,7 +201,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.9,
       reviews: 78,
       location: 'Dallas, TX',
-      image: '/assets/listings/power-tools.jpg',
+      image: {image3},
       category: 'DIY & Tools'
     },
     {
@@ -206,7 +211,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.8,
       reviews: 83,
       location: 'Nashville, TN',
-      image: '/assets/listings/music-instruments.jpg',
+      image: {image2},
       category: 'Music'
     },
     {
@@ -216,7 +221,7 @@ const FeaturedListings = ({ theme }) => {
       rating: 4.7,
       reviews: 67,
       location: 'Tampa, FL',
-      image: '/assets/listings/fishing-boat.jpg',
+      image: {image1},
       category: 'Water Sports'
     }
   ];
@@ -329,6 +334,7 @@ const FeaturedListings = ({ theme }) => {
                           transform: 'scale(1.05)'
                         }
                       }}
+                      
                     />
                     <Box sx={{
                       position: 'absolute',
