@@ -17,7 +17,7 @@ import {
   Divider,
   Badge,
   useTheme,
-  useMediaQuery
+  useMediaQuery, 
 } from '@mui/material';
 import {
   Dashboard as DashboardIcon,
@@ -33,8 +33,12 @@ import {
   Analytics as AnalyticsIcon,
   NotificationsActive as AlertsIcon,
   Chat as ChatIcon,
-  Assessment as ReportsIcon
+  Assessment as ReportsIcon,
+  Checklist as ChecklistIcon
 } from '@mui/icons-material';
+
+
+
 import AdminDashboard from './AdminDashboard';
 import AdminFinancialDashboard from './AdminFinancialDashboard';
 import AdminUserManagement from './AdminUserManagement';
@@ -43,6 +47,7 @@ import ContentUsageDashboard from './ContentUsageDashboard';
 import NotificationsDashboard from './NotificationsDashboard';
 import CommunicationSupportDashboard from './CommunicationSupportDashboard';
 import ReportsDashboard from './ReportsDashboard';
+import QualityDashbaord from './QaulityAssuranceDashboard/QualityDashbaord';
 
 const drawerWidth = 240;
 
@@ -61,10 +66,13 @@ function Admin() {
     { path: '/admin/users', name: 'User Management', icon: <UsersIcon /> },
     { path: '/admin/security-info', name: 'Security & Compliance', icon: <SecurityIcon /> },
     { path: '/admin/finance', name: 'Financial Dashboard', icon: <FinanceIcon /> },
+    { path: '/admin/quality-assurance', name: 'Quality Assurance', icon: <ChecklistIcon /> },
+
     { path: '/admin/analytics', name: 'Content & Analytics', icon: <AnalyticsIcon /> },
     { path: '/admin/alerts', name: 'Notifications & Alerts', icon: <AlertsIcon /> },
     { path: '/admin/communication', name: 'Communication & Support', icon: <ChatIcon /> },
-    { path: '/admin/reports', name: 'Custom Reports', icon: <ReportsIcon /> }
+    { path: '/admin/reports', name: 'Custom Reports', icon: <ReportsIcon /> },
+   
   ];
 
   return (
@@ -238,6 +246,7 @@ function Admin() {
             <Route path="/alerts" element={<NotificationsDashboard />} />
             <Route path="/communication" element={<CommunicationSupportDashboard />} />
             <Route path="/reports" element={<ReportsDashboard />} />
+            <Route path="/quality-assurance" element={<QualityDashbaord />} />
           </Routes>
         </Box>
       </Box>
