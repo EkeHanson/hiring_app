@@ -16,6 +16,12 @@ import {
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
+import TrainerMonitoring from './TrainerMonitoring';
+import AssessmentSampling from './AssessmentSampling';
+import LMSDataAnalysis from './LMSDataAnalysis';
+import FeedbackManagement from './FeedbackManagement';
+import FeedbackDialog from './FeedbackDialog';
+
 // TabPanel component (unchanged)
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -556,6 +562,12 @@ function IQAManagement() {
             {snackbar.message}
           </Alert>
         </Snackbar>
+        <FeedbackDialog 
+        open={feedbackDialogOpen}
+        onClose={() => setFeedbackDialogOpen(false)}
+        trainers={trainers}
+        courses={courses}
+      />
       </Box>
     </LocalizationProvider>
   );
