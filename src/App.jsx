@@ -11,6 +11,8 @@ import Navbar from './components/common/Navbar/Navbar';
 import Footer from './components/common/Footer/Footer';
 import AdminDashboard from './pages/dashboard/AdminDashboard/Admin';
 
+import FeedbackForm from './pages/dashboard/AdminDashboard/QaulityAssuranceDashboard/IQAManagement/FeedbackForm.jsx'
+
 function App() {
   return (
     <Router>
@@ -20,6 +22,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/feedback-form" element={<FeedbackForm />} />
 
         {/* Auth Pages */}
         <Route path="/login" element={<Login />} />

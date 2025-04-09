@@ -58,16 +58,6 @@ function QualityAssuranceDashboard() {
         <Grid container spacing={2} sx={{ p: 3 }}>
           <Grid item xs={12} md={6}>
             <QualityMetrics 
-              title="IQA Status"
-              value="85%"
-              icon={<School />}
-              color="primary"
-              progress={85}
-              description="Internal QA compliance"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <QualityMetrics 
               title="EQA Readiness"
               value="72%"
               icon={<GppGood />}

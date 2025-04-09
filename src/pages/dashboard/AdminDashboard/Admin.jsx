@@ -1,39 +1,16 @@
 import React, { useState } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { 
-  Box,
-  AppBar,
-  Toolbar,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  CssBaseline,
-  Typography,
-  IconButton,
-  Avatar,
-  Divider,
-  Badge,
-  useTheme,
-  useMediaQuery, 
+  Box,  AppBar,  Toolbar,  Drawer,  List,  ListItem,  ListItemButton,
+  ListItemIcon,  ListItemText,  CssBaseline,  Typography,
+  IconButton,  Avatar,  Divider,  Badge,  useTheme,  useMediaQuery, 
 } from '@mui/material';
 import {
-  Dashboard as DashboardIcon,
-  People as UsersIcon,
-  Security as SecurityIcon,
-  AttachMoney as FinanceIcon,
-  Menu as MenuIcon,
-  ChevronLeft as ChevronLeftIcon,
-  ChevronRight as ChevronRightIcon,
-  Notifications as NotificationsIcon,
-  Settings as SettingsIcon,
-  Logout as LogoutIcon,
-  Analytics as AnalyticsIcon,
-  NotificationsActive as AlertsIcon,
-  Chat as ChatIcon,
-  Assessment as ReportsIcon,
+  Dashboard as DashboardIcon,  People as UsersIcon,  Security as SecurityIcon,
+  AttachMoney as FinanceIcon,  Menu as MenuIcon,  ChevronLeft as ChevronLeftIcon,
+  ChevronRight as ChevronRightIcon,  Notifications as NotificationsIcon,
+  Settings as SettingsIcon,  Logout as LogoutIcon,  Analytics as AnalyticsIcon,
+  NotificationsActive as AlertsIcon,  Chat as ChatIcon,  Assessment as ReportsIcon,
   Checklist as ChecklistIcon
 } from '@mui/icons-material';
 

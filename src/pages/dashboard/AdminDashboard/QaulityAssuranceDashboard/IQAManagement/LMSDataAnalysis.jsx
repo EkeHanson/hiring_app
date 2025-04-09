@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Box,
   Typography,
@@ -21,7 +21,10 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  LinearProgress
+  LinearProgress,
+  Menu,
+  Snackbar,
+  Alert
 } from '@mui/material';
 import {
   BarChart as BarChartIcon,
@@ -43,7 +46,10 @@ import {
   Legend,
   ArcElement
 } from 'chart.js';
-import { Bar, Pie } from 'react-chartjs-2';
+import { Bar, Pie, getElementAtEvent } from 'react-chartjs-2';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
+import autoTable from 'jspdf-autotable';
 
 // Register ChartJS components
 ChartJS.register(
@@ -139,13 +145,113 @@ export default function LMSDataAnalysis() {
   const [timeRange, setTimeRange] = useState('30days');
   const [selectedCourse, setSelectedCourse] = useState('all');
   const [isLoading, setIsLoading] = useState(false);
+  const [exportAnchorEl, setExportAnchorEl] = useState(null);
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+  const barChartRef = useRef();
+  const pieChartRef = useRef();
+  const tableRef = useRef();
 
   const handleRefresh = () => {
     setIsLoading(true);
     // Simulate data refresh
     setTimeout(() => {
       setIsLoading(false);
+      setSnackbar({ open: true, message: 'Data refreshed successfully', severity: 'success' });
     }, 1500);
+  };
+
+  const handleExportClick = (event) => {
+    setExportAnchorEl(event.currentTarget);
+  };
+
+  const handleExportClose = () => {
+    setExportAnchorEl(null);
+  };
+
+  const exportAsPDF = async () => {
+    try {
+      const pdf = new jsPDF('landscape');
+      
+      // Add title
+      pdf.setFontSize(20);
+      pdf.text('LMS Data Analysis Report', 15, 20);
+      pdf.setFontSize(12);
+      pdf.text(`Generated on: ${new Date().toLocaleDateString()}`, 15, 30);
+      
+      // Add bar chart
+      const barChartCanvas = await html2canvas(barChartRef.current.canvas);
+      pdf.addImage(barChartCanvas.toDataURL('image/png'), 'PNG', 15, 40, 120, 80);
+      
+      // Add pie chart
+      const pieChartCanvas = await html2canvas(pieChartRef.current.canvas);
+      pdf.addImage(pieChartCanvas.toDataURL('image/png'), 'PNG', 150, 40, 120, 80);
+      
+      // Add table data
+      pdf.text('Course Activity Summary', 15, 140);
+      autoTable(pdf, {
+        startY: 145,
+        head: [['Course', 'Learners', 'Completion Rate', 'Average Score', 'Last Updated']],
+        body: activityData.map(row => [
+          row.course,
+          row.learners,
+          `${row.completionRate}%`,
+          `${row.avgScore}%`,
+          row.lastUpdated
+        ]),
+        theme: 'grid',
+        headStyles: { fillColor: [25, 118, 210] }
+      });
+      
+      pdf.save('LMS_Data_Analysis_Report.pdf');
+      setSnackbar({ open: true, message: 'PDF exported successfully', severity: 'success' });
+    } catch (error) {
+      console.error('PDF export error:', error);
+      setSnackbar({ open: true, message: 'Failed to export PDF', severity: 'error' });
+    }
+    handleExportClose();
+  };
+
+  const exportAsCSV = () => {
+    try {
+      // Prepare CSV content
+      let csvContent = "data:text/csv;charset=utf-8,";
+      
+      // Add charts summary
+      csvContent += "Chart Data Summary\r\n";
+      csvContent += "Chart,Category,Value\r\n";
+      
+      // Bar chart data
+      completionData.labels.forEach((label, index) => {
+        csvContent += `Completion Rate,${label},${completionData.datasets[0].data[index]}%\r\n`;
+      });
+      
+      // Pie chart data
+      passRateData.labels.forEach((label, index) => {
+        csvContent += `Pass Rate,${label},${passRateData.datasets[0].data[index]}%\r\n`;
+      });
+      
+      // Add table data
+      csvContent += "\r\nCourse Activity Data\r\n";
+      csvContent += "Course,Learners,Completion Rate,Average Score,Last Updated\r\n";
+      activityData.forEach(row => {
+        csvContent += `${row.course},${row.learners},${row.completionRate}%,${row.avgScore}%,${row.lastUpdated}\r\n`;
+      });
+      
+      // Download CSV
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "LMS_Data_Analysis.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      setSnackbar({ open: true, message: 'CSV exported successfully', severity: 'success' });
+    } catch (error) {
+      console.error('CSV export error:', error);
+      setSnackbar({ open: true, message: 'Failed to export CSV', severity: 'error' });
+    }
+    handleExportClose();
   };
 
   const options = {
@@ -159,6 +265,13 @@ export default function LMSDataAnalysis() {
         text: 'Course Completion Rates',
       },
     },
+    onClick: (event) => {
+      const element = getElementAtEvent(barChartRef.current, event);
+      if (element.length > 0) {
+        const index = element[0].index;
+        setSelectedCourse(completionData.labels[index]);
+      }
+    }
   };
 
   return (
@@ -215,10 +328,18 @@ export default function LMSDataAnalysis() {
           <Button
             variant="contained"
             startIcon={<FileDownloadIcon />}
-            onClick={() => alert('Export functionality coming soon')}
+            onClick={handleExportClick}
           >
             Export
           </Button>
+          <Menu
+            anchorEl={exportAnchorEl}
+            open={Boolean(exportAnchorEl)}
+            onClose={handleExportClose}
+          >
+            <MenuItem onClick={exportAsPDF}>Export as PDF</MenuItem>
+            <MenuItem onClick={exportAsCSV}>Export as CSV</MenuItem>
+          </Menu>
         </Box>
       </Box>
       
@@ -237,7 +358,12 @@ export default function LMSDataAnalysis() {
             />
             <Divider />
             <CardContent sx={{ height: 400 }}>
-              <Bar data={completionData} options={options} />
+              <Bar 
+                ref={barChartRef}
+                data={completionData} 
+                options={options} 
+                redraw={isLoading}
+              />
             </CardContent>
           </Card>
         </Grid>
@@ -254,7 +380,11 @@ export default function LMSDataAnalysis() {
             />
             <Divider />
             <CardContent sx={{ height: 400 }}>
-              <Pie data={passRateData} />
+              <Pie 
+                ref={pieChartRef}
+                data={passRateData} 
+                redraw={isLoading}
+              />
             </CardContent>
           </Card>
         </Grid>
@@ -271,7 +401,7 @@ export default function LMSDataAnalysis() {
         />
         <Divider />
         <CardContent>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} ref={tableRef}>
             <Table>
               <TableHead>
                 <TableRow sx={{ backgroundColor: 'primary.light' }}>
@@ -316,6 +446,21 @@ export default function LMSDataAnalysis() {
           </TableContainer>
         </CardContent>
       </Card>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Alert 
+          onClose={() => setSnackbar({ ...snackbar, open: false })} 
+          severity={snackbar.severity}
+          sx={{ width: '100%' }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
